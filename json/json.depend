@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1422966652 source:e:\projects\json\json\source.cpp
+	"FileSystem.hpp"
+	<iostream>
+
+1422966702 e:\projects\json\json\filesystem.hpp
+	<cstdio>
+	<string>
+	"config.hpp"
+
+1422966340 e:\projects\json\json\config.hpp
+
