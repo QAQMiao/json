@@ -1,12 +1,20 @@
 # depslib dependency file v1.0
-1422966652 source:e:\projects\json\json\source.cpp
+1422981120 source:e:\projects\json\json\source.cpp
 	"FileSystem.hpp"
+	"Serialization.hpp"
 	<iostream>
 
-1422966702 e:\projects\json\json\filesystem.hpp
+1422973376 e:\projects\json\json\filesystem.hpp
 	<cstdio>
 	<string>
 	"config.hpp"
 
 1422966340 e:\projects\json\json\config.hpp
+
+1422980947 e:\projects\json\json\serialization.hpp
+	<vector>
+	"util.hpp"
+
+1422981015 e:\projects\json\json\util.hpp
+	<type_traits>
 
