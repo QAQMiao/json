@@ -9,6 +9,7 @@ Desktop.ini
 $RECYCLE.BIN/
 
 json/obj
+json/bin
 
 # Windows Installer files
 *.cab
