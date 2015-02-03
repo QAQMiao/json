@@ -5,7 +5,8 @@
 #include<string>
 #include"config.hpp"
 
-namespace MEOJ{
+namespace MEOJ
+{
 	class FileSystem
 	{
 	public:
