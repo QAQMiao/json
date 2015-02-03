@@ -10,7 +10,8 @@ namespace MEOJ
         JSON_NUMERIC,
         JSON_OBJECT,
         JSON_STRING,
-        JSON_UNKNOWN
+        JSON_UNKNOWN,
+
         JSON_TYPE_COUNT
     };
 }

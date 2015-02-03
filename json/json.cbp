@@ -31,6 +31,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="FileSystem.hpp" />
+		<Unit filename="Serialization.hpp" />
+		<Unit filename="config.hpp" />
+		<Unit filename="source.cpp" />
+		<Unit filename="util.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -12,15 +12,17 @@ namespace MEOJ
 	public:
 		FileSystem(){}
 		~FileSystem(){}
+		//设定文件内容
 		void setFileContext(const std::string& context)
 		{
 			fileContext = context;
 		}
+		//获取文件内容
 		std::string getFileContext()
 		{
 			return fileContext;
 		}
-
+		//根据文件路径读取文件内容
 		bool readFileContext(const char* fileName)
 		{
 			std::FILE* fp = NIL;
