@@ -18,7 +18,7 @@ namespace MEOJ
 			fileContext = context;
 		}
 		//获取文件内容
-		std::string getFileContext()
+		std::string getFileContext() const
 		{
 			return fileContext;
 		}
