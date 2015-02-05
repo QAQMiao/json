@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="FileSystem.hpp" />
+		<Unit filename="JSON_TYPE.hpp" />
+		<Unit filename="JsonNode.hpp" />
 		<Unit filename="Serialization.hpp" />
 		<Unit filename="config.hpp" />
 		<Unit filename="source.cpp" />
