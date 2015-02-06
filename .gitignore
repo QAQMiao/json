@@ -10,6 +10,8 @@ $RECYCLE.BIN/
 
 json/obj
 json/bin
+json/json.depend
+json/json.layout
 
 # Windows Installer files
 *.cab
