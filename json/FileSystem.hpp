@@ -51,7 +51,7 @@ namespace MEOJ
 			{
 				return false;
 			}
-			for(int i = 0;i < fileContext.length(); i++)
+			for(std::string::size_type i = 0;i < fileContext.length(); i++)
 			{
 				std::fputc(fileContext[i],fp);
 			}

@@ -11,6 +11,7 @@ namespace MEOJ
         JSON_OBJECT,
         JSON_STRING,
         JSON_UNKNOWN,
+        JSON_ERROR,
 
         JSON_TYPE_COUNT
     };
