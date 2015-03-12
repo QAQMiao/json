@@ -128,10 +128,21 @@ JsonNode* parse(const string& src)
 
 int main()
 {
-	FileSystem fs;
-	fs.readFileContext("testFile.txt");
-	auto ret = parse(fs.getFileContext());
-	ret->display();
-	delete ret;
+	bool success = true;
+	try
+	{
+		FileSystem fs;
+		fs.readFileContext("testFile.txt");
+		auto ret = parse(fs.getFileContext());
+		ret->display();
+		delete ret;
+	}
+	catch(const MyException& err)
+	{
+		success = false;
+		cout<<err.what()<<endl;
+	}
+	if(success)
+		printf("哇塞！你好幸运！居然在如此渣渣的代码下成功了！恭喜你～\n");
 	return 0;
 }

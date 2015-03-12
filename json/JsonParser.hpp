@@ -6,6 +6,7 @@
 #include "FileSystem.hpp"
 #include "JsonNode.hpp"
 
+
 namespace MEOJ
 {
 	class JsonParser
@@ -17,12 +18,15 @@ namespace MEOJ
 			if(source.empty())
 				return false;
 			std::string::size_type i;
-            while(context[i] != "\"")
+            while(context[i] != '\"')
 				i++;
 			context.substr(i);
-			JsonNode* nowNode = new JsonNode;
+			JsonNode* rootNode = new JsonNode;
+			rootNode->children = getChildren(context);
+
+
 			std::string key;
-			while(context[++i] != "\"")
+			while(context[++i] != '\"')
 				key+=context[i];
 			nowNode -> setKey(key);
 			JSON_TYPE jsonType = nowNode -> parseJsonType(context);

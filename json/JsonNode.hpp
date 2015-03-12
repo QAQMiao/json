@@ -1,8 +1,9 @@
 #ifndef JSONNODE_HPP
 #define JSONNODE_HPP
 
-#include"config.hpp"
-#include"JSON_TYPE.hpp"
+#include "config.hpp"
+#include "JSON_TYPE.hpp"
+#include "MyException.hpp"
 #include<vector>
 #include<string>
 #include<iostream>
@@ -30,7 +31,7 @@ namespace MEOJ
 				typeString = "jsonBoolean";break;
 			case JSON_OBJECT:
 				typeString = "jsonObject";break;
-            default:
+         JSON_TYPE parseJsonType(const std::string& context)   default:
             	typeString = "jsonUnknown";break;
 			}
 			for(int i = 0;i < tabs;i++)
@@ -103,7 +104,6 @@ namespace MEOJ
             child->parent = this;
             return true;
         }
-
         //根据字符串解析当前节点的json数据类型
         const JSON_TYPE parseJsonType(const std::string& context)
         {
@@ -140,7 +140,7 @@ namespace MEOJ
             else if(context[i] == 't' || context[i] == 'f')
                 jsonType = JSON_BOOLEAN;
 			//此时应该为错误数据类型
-            else jsonType = JSON_ERROR;
+            else throw MyException("文件有问题你丫脑子有病吧！！！你知不知道姐姐写这个多蛋疼！！！");
             return jsonType;
         }
         //返回当前节点的json数据类型
