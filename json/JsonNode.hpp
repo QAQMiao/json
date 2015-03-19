@@ -31,7 +31,7 @@ namespace MEOJ
 				typeString = "jsonBoolean";break;
 			case JSON_OBJECT:
 				typeString = "jsonObject";break;
-         JSON_TYPE parseJsonType(const std::string& context)   default:
+            default:
             	typeString = "jsonUnknown";break;
 			}
 			for(int i = 0;i < tabs;i++)
@@ -86,7 +86,14 @@ namespace MEOJ
 		{
 			this->key = key;
 		}
-
+		void setValue(std::vector<unsigned char> value)
+		{
+			this->value = value;
+		}
+		const std::vector<unsigned char> getValue() const
+		{
+			return value;
+		}
         const bool delChild(int index)
         {
             if(index < 0 || index >= int(children.size()))
@@ -159,7 +166,7 @@ namespace MEOJ
     private:
         std::string key;
         std::vector<JsonNode*>children;
-        std::vector<unsigned char>value;
+        std::vector<unsigned char> value;
         JSON_TYPE jsonType;
         JsonNode* parent;
     };

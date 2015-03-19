@@ -1,6 +1,4 @@
 #include "GetChildren.hpp"
-#include "JsonNode.hpp"
-#include "JSON_TYPE.hpp"
 
 namespace MEOJ{
 /*大致就是，先把用户需要解析的string给flcl一遍，分出第一层子节点，然后根据
@@ -9,44 +7,109 @@ namespace MEOJ{
 	std::vector<JsonNode*> getChildren(std::string context)
 	{
 		std::vector<JsonNode*>childrens;
-		std::vector::size_type cnt = 0;
-		std::vector<std::string>smallPart = DiliverContext(context);
-		for(std::vector::size_type i = 0;i < smallPart.size();i++)
+		//std::vector<>::size_type cnt = 0;
+		std::vector<std::string>smallPart = diliverContext(context);
+		for(std::vector<std::string>::size_type i = 0;i < smallPart.size();i++)
 		{
             JsonNode* nowNode = new JsonNode;
 			std::string key = "";
 			std::string::size_type position = 0;
 			while(smallPart[i][position++] != '\"')
 				key += smallPart[i][position - 1];
-			setkey(key);
-			JSON_TYPE nowType = parseJsonType();
+			nowNode->setKey(key);
+			JSON_TYPE nowType = nowNode->parseJsonType(smallPart[i]);
 			smallPart[i].substr(position);
 			switch(nowType)
 			{
 				case JSON_STRING:
-					dealString(smallPart[i]);break;
+					dealString(nowNode,smallPart[i]);break;
 				case JSON_BOOLEAN:
-					dealBoolean(smallPart[i]);break;
+					dealBoolean(nowNode,smallPart[i]);break;
 				case JSON_NUMERIC:
-					dealNumberic(smallPart[i]);break;
+					dealNumberic(nowNode,smallPart[i]);break;
 				case JSON_OBJECT:
-					dealObject(smallPart[i]);break;
+					dealObject(nowNode,smallPart[i]);break;
 				case JSON_ARRAY:
-					dealArray(smallPart[i]);break;
+					dealArray(nowNode,smallPart[i]);break;
 				default:
 					break;
 
 			}
 
 		}
-		void dealString(const string& str)
-		{
-			if()
-		}
-		void dealBoolean(const string& str)
-		void dealNumberic(const string& str)
-		void dealObject(const string& str)
-		void dealArray(const string& str)
-	}
 
+	}
+	void dealString(JsonNode* nowNode,const std::string& str)
+	{
+		std::string::size_type poi = 0;
+		while(str[poi] != '\"')
+			poi++;
+		std::string value;
+		while(poi < str.size())
+		{
+			if(str[++poi] == '\"' && str[poi - 1] != '\\')
+				break;
+			value += str[poi];
+		}
+		nowNode->setValue(getDataSerialization(value));
+
+	}
+	void dealBoolean(JsonNode* nowNode,const std::string& str)
+	{
+		;
+	}
+	void dealNumberic(JsonNode* nowNode,const std::string& str)
+	{
+		;
+	}
+	void dealObject(JsonNode* nowNode,const std::string& str)
+	{
+		;
+	}
+	void dealArray(JsonNode* nowNode,const std::string& str)
+	{
+		;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

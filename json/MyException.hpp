@@ -8,12 +8,12 @@ namespace MEOJ
 	class MyException : public std::exception
 	{
 	public:
-		MyException(){}
-		MyException(const char* information)
+		MyException() noexcept{}
+		MyException(const char* information) noexcept
 		{
 			error = information;
 		}
-		const char* what() const
+		const char* what() const noexcept
 		{
 			return error.c_str();
 		}

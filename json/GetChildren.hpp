@@ -4,14 +4,18 @@
 #include<cstdio>
 #include<string>
 #include<vector>
+#include "JsonNode.hpp"
+#include "JSON_TYPE.hpp"
+#include "DiliverContext.hpp"
+#include "Serialization.hpp"
 
 namespace MEOJ
 {
-	JsonNode* getChildren(std::string context);
-	void dealString(const string& str);
-	void dealBoolean(const string& str);
-	void dealNumberic(const string& str);
-	void dealObject(const string& str);
-	void dealArray(const string& str);
+	std::vector<JsonNode*> getChildren(std::string context);
+	void dealString(JsonNode* nowNode,const std::string& str);
+	void dealBoolean(JsonNode* nowNode,const std::string& str);
+	void dealNumberic(JsonNode* nowNode,const std::string& str);
+	void dealObject(JsonNode* nowNode,const std::string& str);
+	void dealArray(JsonNode* nowNode,const std::string& str);
 }
 #endif // GETCHILDREN_HPP
