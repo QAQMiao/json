@@ -20,9 +20,8 @@ namespace MEOJ
 			std::string::size_type i;
             while(context[i] != '\"')
 				i++;
-			context.substr(i);
 			JsonNode* rootNode = new JsonNode;
-			rootNode->children = getChildren(context);
+			rootNode->children = getChildren(context.substr(i));
 
 
 			std::string key;

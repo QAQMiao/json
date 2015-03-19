@@ -11,7 +11,7 @@
 
 namespace MEOJ
 {
-	std::vector<JsonNode*> getChildren(std::string context);
+	std::vector<JsonNode*> getChildren(const std::string& context);
 	void dealString(JsonNode* nowNode,const std::string& str);
 	void dealBoolean(JsonNode* nowNode,const std::string& str);
 	void dealNumberic(JsonNode* nowNode,const std::string& str);
