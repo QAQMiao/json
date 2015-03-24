@@ -4,6 +4,8 @@ namespace MEOJ{
 /*大致就是，先把用户需要解析的string给flcl一遍，分出第一层子节点，然后根据
 每段的具体类型，继续划分，直至每个结点都为string、numberic、boolean类型或
 最简的array类型【这个我也形容不好，佛曰只可意会不可言传～】*/
+
+//叫着getChildren,实际上却是getValue的功能，鉴于实在不相信哈士奇的捣乱，觉得勉强这么叫着
 	std::vector<JsonNode*> getChildren(const std::string& context)
 	{
 		std::vector<JsonNode*>childrens;
@@ -22,15 +24,17 @@ namespace MEOJ{
 			switch(nowType)
 			{
 				case JSON_STRING:
-					dealString(nowNode,smallPart[i]);break;
+					children.push_back(dealString(nowNode,smallPart[i]));break;
 				case JSON_BOOLEAN:
-					dealBoolean(nowNode,smallPart[i]);break;
+					children.push_back(dealBoolean(nowNode,smallPart[i]));break;
 				case JSON_NUMERIC:
-					dealNumberic(nowNode,smallPart[i]);break;
+					children.push_back(dealNumberic(nowNode,smallPart[i]));break;
 				case JSON_OBJECT:
-					dealObject(nowNode,smallPart[i]);break;
+					children.push_back(dealObject(nowNode,smallPart[i]));break;
 				case JSON_ARRAY:
-					dealArray(nowNode,smallPart[i]);break;
+					children.push_back(dealArray(nowNode,smallPart[i]));break;
+				case JSON_UNKNOWN:
+					cout<<"这是什么鬼"<<endl;
 				default:
 					break;
 
@@ -39,7 +43,16 @@ namespace MEOJ{
 		}
 
 	}
-	void dealString(JsonNode* nowNode,const std::string& str)
+	std::vector<unsigned char> getArrayValue(const std::string& context)
+	{
+		std::vector<std::string>smallPart = diliver(context);
+		for(std::vector<std::string>::size_type i = 0 ;i < smallPart.size(),i++)
+		{
+			string tmp = "\"aa\":" + smallPart[i];
+			JSON_TYPE nowType =
+		}
+	}
+	JsonNode* dealString(JsonNode* nowNode,const std::string& str)
 	{
 		std::string::size_type poi = 0;
 		while(str[poi] != '\"')
@@ -52,8 +65,9 @@ namespace MEOJ{
 			value += str[poi];
 		}
 		nowNode->setValue(getDataSerialization(value));
+		return nowNode;
 	}
-	void dealBoolean(JsonNode* nowNode,const std::string& str)
+	JsonNode* dealBoolean(JsonNode* nowNode,const std::string& str)
 	{
 		std::string::size_type poi = 0;
 		while(str[poi] != 't' && str[poi] != 'f')
@@ -64,23 +78,30 @@ namespace MEOJ{
 		else
 			value = false;
 		nowNode->setValue(getDataSerialization(value));
-				}
-	void dealNumberic(JsonNode* nowNode,const std::string& str)
+		return nowNode;
+	}
+	JsonNode* dealNumberic(JsonNode* nowNode,const std::string& str)
 	{
 		std::string::size_type poi = 0;
 		while(str[poi] < '0' || str[poi] > '9')
 			poi++;
 		int value = 0;
-		while(str[poi] >= '0' && str[poi] <= '9')
+		while(str[poi] >= '0' && str[poi] <= '9' || str[poi] == '.')
 			value = value * 10 + str[poi];
 		nowNode->setValue(getDataSerialization(value));
-
+		return nowNode;
 	}
-	void dealObject(JsonNode* nowNode,const std::string& str)
+	JsonNode* dealObject(JsonNode* nowNode,const std::string& str)
 	{
-		;
+		std::string::size_type poi = 0,fpoi = str.size() - 1;
+		while(str[poi] != '{')
+			poi++;
+		while(str[fpoi] != '}')
+			fpoi--;
+		nowNode->children = getChildren(str.substr(poi + 1,fpoi - poi - 1));
+		return nowNode;
 	}
-	void dealArray(JsonNode* nowNode,const std::string& str)
+	JsonNode* dealArray(JsonNode* nowNode,const std::string& str)
 	{
 		std::vector<JsonNode*> value;
 		std::string::size_type poi = 0,fpoi = str.size() -1;
@@ -89,7 +110,8 @@ namespace MEOJ{
 		while(str[fpoi] != ']')
 			fpoi--;
 		value = getChildren(str.substr(poi+1,fpoi - poi - 1));
-
+		nowNode->setValue(getDataSerialization(value));
+		return nowNode;
 	}
 }
 

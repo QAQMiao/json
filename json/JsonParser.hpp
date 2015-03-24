@@ -17,13 +17,12 @@ namespace MEOJ
 			std::string context(source);
 			if(source.empty())
 				return false;
-			std::string::size_type i;
-            while(context[i] != '\"')
-				i++;
 			JsonNode* rootNode = new JsonNode;
 			rootNode->children = getChildren(context.substr(i));
 
-
+			std::string::size_type i;
+            while(source[i] != '\"')
+				i++;
 			std::string key;
 			while(context[++i] != '\"')
 				key+=context[i];
