@@ -5,7 +5,7 @@
 #include<string>
 #include "FileSystem.hpp"
 #include "JsonNode.hpp"
-
+#include "GetChildren.hpp"
 
 namespace MEOJ
 {
@@ -16,31 +16,32 @@ namespace MEOJ
 		{
 			std::string context(source);
 			if(source.empty())
-				return false;
+				return nullptr;
 			JsonNode* rootNode = new JsonNode;
-			rootNode->children = getChildren(context.substr(i));
+			rootNode->addChild(getChildren(source));
 
-			std::string::size_type i;
-            while(source[i] != '\"')
-				i++;
-			std::string key;
-			while(context[++i] != '\"')
-				key+=context[i];
-			nowNode -> setKey(key);
-			JSON_TYPE jsonType = nowNode -> parseJsonType(context);
-			if(jsonType == 0)
-			{
-				;
-			}
-			if(jsonType == 1)
-			{
-				;
-			}
+//			std::string::size_type i;
+//            while(source[i] != '\"')
+//				i++;
+//			std::string key;
+//			while(context[++i] != '\"')
+//				key+=context[i];
+//			nowNode -> setKey(key);
+//			JSON_TYPE jsonType = JsonNode::parseJsonType(context);
+//			if(jsonType == 0)
+//			{
+//				;
+//			}
+//			if(jsonType == 1)
+//			{
+//				;
+//			}
+			return nullptr;
 		}
 		JsonNode* getRootNodeFromFile(const char* fileName)
 		{
-			;
+			return nullptr;
 		}
-	}
+	};
 }
 #endif // JSONPARSER_HPP

@@ -4,6 +4,7 @@
 #include<cstdio>
 #include<string>
 #include<vector>
+#include<iostream>
 #include "JsonNode.hpp"
 #include "JSON_TYPE.hpp"
 #include "DiliverContext.hpp"
