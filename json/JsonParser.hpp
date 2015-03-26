@@ -19,28 +19,13 @@ namespace MEOJ
 				return nullptr;
 			JsonNode* rootNode = new JsonNode;
 			rootNode->addChild(getChildren(source));
-
-//			std::string::size_type i;
-//            while(source[i] != '\"')
-//				i++;
-//			std::string key;
-//			while(context[++i] != '\"')
-//				key+=context[i];
-//			nowNode -> setKey(key);
-//			JSON_TYPE jsonType = JsonNode::parseJsonType(context);
-//			if(jsonType == 0)
-//			{
-//				;
-//			}
-//			if(jsonType == 1)
-//			{
-//				;
-//			}
-			return nullptr;
+			return rootNode;
 		}
 		JsonNode* getRootNodeFromFile(const char* fileName)
 		{
-			return nullptr;
+			JsonNode* rootNode = new JsonNode;
+			rootNode = getRootNodeFromString(FileSystem::readFileContext(fileName));
+			return rootNode;
 		}
 	};
 }

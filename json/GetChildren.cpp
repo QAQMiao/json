@@ -1,19 +1,20 @@
 #include "GetChildren.hpp"
-
 using namespace MEOJ;
-
-
 /*大致就是，先把用户需要解析的string给flcl一遍，分出第一层子节点，然后根据
 每段的具体类型，继续划分，直至每个结点都为string、numberic、boolean类型或
 最简的array类型【这个我也形容不好，佛曰只可意会不可言传～】*/
 
 //叫着getChildren,实际上却是getValue的功能，鉴于实在不相信哈士奇的捣乱，觉得勉强这么叫着
 //上一条注释是错的。。。就是getChildren。。逻辑一下子没捋明白- -
-std::vector<JsonNode*> getChildren(const std::string& context)
+std::vector<JsonNode*> MEOJ::getChildren(const std::string& context)
 {
+	std::string::size_type poi = 0,fpoi = context.size() - 1;
+	while(context[poi] != '{')
+		poi++;
+	while(context[fpoi] != '}')
+		fpoi--;
 	std::vector<JsonNode*>childrens;
-	//std::vector<>::size_type cnt = 0;
-	std::vector<std::string>smallPart = diliverContext(context);
+	std::vector<std::string>smallPart = diliverContext(context.substr(poi + 1,fpoi - poi - 1));
 	for(std::vector<std::string>::size_type i = 0;i < smallPart.size();i++)
 	{
 		JsonNode* nowNode = new JsonNode;
@@ -48,9 +49,9 @@ std::vector<JsonNode*> getChildren(const std::string& context)
 	return childrens;
 }
 
-std::vector<unsigned char> getArrayValue(const std::string& context)
+std::vector<unsigned char> MEOJ::getArrayValue(const std::string& context)
 {
-	std::vector<std::string>smallPart = diliverArrayContext(context);
+	std::vector<std::string>smallPart = diliverContext(context);
 	std::vector<JsonNode*>value;
 	for(std::vector<std::string>::size_type i = 0 ;i < smallPart.size();i++)
 	{
@@ -79,7 +80,7 @@ std::vector<unsigned char> getArrayValue(const std::string& context)
 	}
 }
 
-JsonNode* dealString(JsonNode* nowNode,const std::string& str)
+JsonNode* MEOJ::dealString(JsonNode* nowNode,const std::string& str)
 {
 	std::string::size_type poi = 0;
 	while(str[poi] != '\"')
@@ -95,7 +96,7 @@ JsonNode* dealString(JsonNode* nowNode,const std::string& str)
 	return nowNode;
 }
 
-JsonNode* dealBoolean(JsonNode* nowNode,const std::string& str)
+JsonNode* MEOJ::dealBoolean(JsonNode* nowNode,const std::string& str)
 {
 	std::string::size_type poi = 0;
 	while(str[poi] != 't' && str[poi] != 'f')
@@ -109,7 +110,7 @@ JsonNode* dealBoolean(JsonNode* nowNode,const std::string& str)
 	return nowNode;
 }
 
-JsonNode* dealNumberic(JsonNode* nowNode,const std::string& str)
+JsonNode* MEOJ::dealNumberic(JsonNode* nowNode,const std::string& str)
 {
 	std::string::size_type poi = 0;
 	while(str[poi] < '0' || str[poi] > '9')
@@ -121,7 +122,7 @@ JsonNode* dealNumberic(JsonNode* nowNode,const std::string& str)
 	return nowNode;
 }
 
-JsonNode* dealObject(JsonNode* nowNode,const std::string& str)
+JsonNode* MEOJ::dealObject(JsonNode* nowNode,const std::string& str)
 {
 	std::string::size_type poi = 0,fpoi = str.size() - 1;
 	while(str[poi] != '{')
@@ -132,7 +133,7 @@ JsonNode* dealObject(JsonNode* nowNode,const std::string& str)
 	return nowNode;
 }
 
-JsonNode* dealArray(JsonNode* nowNode,const std::string& str)
+JsonNode* MEOJ::dealArray(JsonNode* nowNode,const std::string& str)
 {
 //	std::vector<JsonNode*> value;
 	std::string::size_type poi = 0,fpoi = str.size() -1;

@@ -10,27 +10,16 @@ namespace MEOJ
 	class FileSystem
 	{
 	public:
-		FileSystem(){}
-		~FileSystem(){}
-		//设定文件内容
-		void setFileContext(const std::string& context)
-		{
-			fileContext = context;
-		}
-		//获取文件内容
-		const std::string getFileContext() const
-		{
-			return fileContext;
-		}
 		//根据文件路径读取文件内容
-		bool readFileContext(const char* fileName)
+		static const std::string readFileContext(const char* fileName)
 		{
 			std::FILE* fp = NIL;
+			std::string fileContext;
 			fp = std::fopen(fileName,"r");
 			//此时fp仍然为null值则读取文件失败，返回false
 			if(!fp)
 			{
-				return false;
+				return "";
 			}
 			fileContext = "";
 			while(!std::feof(fp))
@@ -41,9 +30,9 @@ namespace MEOJ
 			{
 				std::fclose(fp);
 			}
-			return true;
+			return fileContext;
 		}
-		bool writeFileContext(const char* fileName)
+		static bool writeFileContext(const char* fileName,const std::string& fileContext)
 		{
 			std::FILE* fp = NIL;
 			fp = std::fopen(fileName,"w");
@@ -61,8 +50,6 @@ namespace MEOJ
 			}
 			return true;
 		}
-	private:
-		std::string fileContext;
 	};
 }
 

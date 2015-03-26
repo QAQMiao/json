@@ -10,10 +10,8 @@ int main()
 	bool success = true;
 	try
 	{
-		FileSystem fs;
-		fs.readFileContext("testFile.txt");
 		JsonParser ps;
-		auto ret = ps.getRootNodeFromString(fs.getFileContext());
+		auto ret = ps.getRootNodeFromFile("testFile.txt");
 		ret->display();
 		delete ret;
 	}
