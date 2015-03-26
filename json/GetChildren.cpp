@@ -8,6 +8,7 @@ using namespace MEOJ;
 最简的array类型【这个我也形容不好，佛曰只可意会不可言传～】*/
 
 //叫着getChildren,实际上却是getValue的功能，鉴于实在不相信哈士奇的捣乱，觉得勉强这么叫着
+//上一条注释是错的。。。就是getChildren。。逻辑一下子没捋明白- -
 std::vector<JsonNode*> getChildren(const std::string& context)
 {
 	std::vector<JsonNode*>childrens;
@@ -37,7 +38,7 @@ std::vector<JsonNode*> getChildren(const std::string& context)
 			case JSON_ARRAY:
 				childrens.push_back(dealArray(nowNode,smallPart[i]));break;
 			case JSON_UNKNOWN:
-				std::cout<<"这是什么鬼"<<std::endl;
+				std::cout<<"这是什么鬼"<<std::endl;break;
 			default:
 				break;
 
@@ -49,11 +50,32 @@ std::vector<JsonNode*> getChildren(const std::string& context)
 
 std::vector<unsigned char> getArrayValue(const std::string& context)
 {
-	std::vector<std::string>smallPart = diliverContext(context);
+	std::vector<std::string>smallPart = diliverArrayContext(context);
+	std::vector<JsonNode*>value;
 	for(std::vector<std::string>::size_type i = 0 ;i < smallPart.size();i++)
 	{
+		JsonNode* nowNode;
 		std::string tmp = "\"aa\":" + smallPart[i];
 		JSON_TYPE nowType = JsonNode::parseJsonType(context);
+		switch(nowType)
+		{
+			case JSON_STRING:
+				value.push_back(dealString(nowNode,smallPart[i]));break;
+			case JSON_BOOLEAN:
+				value.push_back(dealBoolean(nowNode,smallPart[i]));break;
+			case JSON_NUMERIC:
+				value.push_back(dealNumberic(nowNode,smallPart[i]));break;
+			case JSON_OBJECT:
+				value.push_back(dealObject(nowNode,smallPart[i]));break;
+			case JSON_ARRAY:
+				value.push_back(dealArray(nowNode,smallPart[i]));break;
+			case JSON_UNKNOWN:
+				std::cout<<"这是什么鬼"<<std::endl;break;
+			default:
+				break;
+		}
+		return getDataSerialization(value);
+
 	}
 }
 
@@ -112,42 +134,15 @@ JsonNode* dealObject(JsonNode* nowNode,const std::string& str)
 
 JsonNode* dealArray(JsonNode* nowNode,const std::string& str)
 {
-	std::vector<JsonNode*> value;
+//	std::vector<JsonNode*> value;
 	std::string::size_type poi = 0,fpoi = str.size() -1;
 	while(str[poi] != '[')
 		poi++;
 	while(str[fpoi] != ']')
 		fpoi--;
-	value = getChildren(str.substr(poi+1,fpoi - poi - 1));
-	nowNode->setValue(getDataSerialization(value));
+//	value = getChildren(str.substr(poi+1,fpoi - poi - 1));
+	nowNode->setValue(getArrayValue(str.substr(poi+1,fpoi - poi - 1)));
 	return nowNode;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
