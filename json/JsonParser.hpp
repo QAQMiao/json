@@ -18,7 +18,8 @@ namespace MEOJ
 			if(source.empty())
 				return nullptr;
 			JsonNode* rootNode = new JsonNode;
-			rootNode->addChild(getChildren(source));
+			rootNode -> addChild(getChildren(source));
+			rootNode -> setJsonType(JSON_VIRTUAL_ROOT);
 			return rootNode;
 		}
 		JsonNode* getRootNodeFromFile(const char* fileName)

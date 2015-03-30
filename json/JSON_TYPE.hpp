@@ -11,6 +11,8 @@ namespace MEOJ
         JSON_OBJECT,
         JSON_STRING,
         JSON_UNKNOWN,
+        JSON_VIRTUAL_ROOT,
+
         JSON_TYPE_COUNT
     };
 }

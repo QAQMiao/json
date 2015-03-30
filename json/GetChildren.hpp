@@ -1,6 +1,5 @@
 #ifndef GETCHILDREN_HPP
 #define GETCHILDREN_HPP
-
 #include<cstdio>
 #include<string>
 #include<vector>
@@ -9,6 +8,7 @@
 #include "JSON_TYPE.hpp"
 #include "DiliverContext.hpp"
 #include "Serialization.hpp"
+#include "MeoJMacros.hpp"
 
 namespace MEOJ
 {

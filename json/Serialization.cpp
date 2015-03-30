@@ -7,7 +7,7 @@ const std::vector<unsigned char> MEOJ::getStringDataSerialization(std::string& d
 	vectorWrap result;
 	result.chunks = data.size();
 	result.dataBytes = new unsigned char[result.chunks];
-	for(int i=0;i<data.size();i++)
+	for(int i = 0;i < data.size();i++)
 	{
 		result.dataBytes[i] = data[i];
 	}
@@ -17,7 +17,7 @@ const std::string MEOJ::getStringDataFromSerialization(const std::vector<unsigne
 {
 	vectorWrap result = getDataFromSerialization<vectorWrap>(data);
 	std::string realResult;
-	for(int i=0;i<result.chunks;i++)
+	for(int i = 0;i < result.chunks;i++)
 	{
 		realResult += result.dataBytes[i];
 	}

@@ -49,7 +49,7 @@ namespace MEOJ
 		vectorWrap result;
 		result.chunks = data.size() * sizeof(T);
 		result.dataBytes = new unsigned char[result.chunks];
-		for(int i=0;i<data.size();i++)
+		for(typename std::vector<T>::size_type i = 0;i < data.size();i++)
 		{
 			*reinterpret_cast<T*>(result.dataBytes + (i * sizeof(T))) = data[i];
 		}

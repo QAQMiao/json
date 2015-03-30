@@ -20,7 +20,7 @@ namespace MEOJ
 		void displayRecursive(int tabs,JsonNode* pNode)
 		{
 			std::string typeString;
-			switch(pNode->jsonType)
+			switch(pNode -> jsonType)
 			{
 			case JSON_ARRAY:
 				typeString = "jsonArray";break;
@@ -40,19 +40,19 @@ namespace MEOJ
 				printf("\t");
 			}
 			std::printf("<node name=\"%s\" type=\"%s\">",
-						pNode->key.c_str(),
+						pNode -> key.c_str(),
 						typeString.c_str());
 			if(pNode->hasChildren())
 				printf("\n");
 			if(pNode->jsonType == JSON_ARRAY)
 			{
-				auto values = pNode->getValue();
+				auto values = pNode -> getValue();
 				auto jsonNodes = getVectorDataFromSerialization<JsonNode*>(values);
 				if(!jsonNodes.empty())
 				{
 					printf("\n");
 				}
-				for(int i = 0;i < jsonNodes.size();i++)
+				for(decltype(jsonNodes)::size_type i = 0;i < jsonNodes.size();i++)
 				{
 					for(int j = 0;j < tabs + 1;j++)
 					{
@@ -67,15 +67,15 @@ namespace MEOJ
 					printf("</elem>\n");
 				}
 			}
-			switch(pNode->jsonType)
+			switch(pNode -> jsonType)
 			{
 			case JSON_ARRAY:
                 break;
 			case JSON_STRING:
-				std::cout << getStringDataFromSerialization(pNode->getValue());
+				std::cout << getStringDataFromSerialization(pNode -> getValue());
 				break;
 			case JSON_NUMERIC:
-				std::cout << getDataFromSerialization<double>(pNode->getValue());
+				std::cout << getDataFromSerialization<double>(pNode -> getValue());
 				break;
 			case JSON_BOOLEAN:
 				if(getDataFromSerialization<bool>(pNode->getValue()))
@@ -91,12 +91,12 @@ namespace MEOJ
 			default:
 				for(std::vector<JsonNode*>::size_type i = 0;i < pNode->children.size();i++)
 				{
-					displayRecursive(tabs + 1 , pNode->children[i]);
+					displayRecursive(tabs + 1 , pNode -> children[i]);
 				}
 				break;
             }
 
-			if(pNode->hasChildren() || pNode->jsonType == JSON_ARRAY)
+			if(pNode -> hasChildren() || pNode->jsonType == JSON_ARRAY)
 			{
 				for(int i = 0;i < tabs;i++)
 				{
@@ -124,7 +124,15 @@ namespace MEOJ
 
     	void display()
     	{
-			displayRecursive(0,this);
+			if(jsonType == JSON_VIRTUAL_ROOT)
+			{
+				for(decltype(children)::size_type i = 0;i < children.size();i++)
+					displayRecursive(0,children[i]);
+			}
+			else
+			{
+				displayRecursive(0,this);
+			}
     	}
 
         const std::string& getKey() const
@@ -133,11 +141,11 @@ namespace MEOJ
         }
         void setKey(std::string key)
 		{
-			this->key = key;
+			this -> key = key;
 		}
 		void setValue(const std::vector<unsigned char>& value)
 		{
-			this->value = value;
+			this -> value = value;
 		}
 		std::vector<unsigned char> getValue() const
 		{
