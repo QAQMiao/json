@@ -40,6 +40,7 @@
 		<Unit filename="JsonNode.hpp" />
 		<Unit filename="JsonParser.hpp" />
 		<Unit filename="MyException.hpp" />
+		<Unit filename="Serialization.cpp" />
 		<Unit filename="Serialization.hpp" />
 		<Unit filename="config.hpp" />
 		<Unit filename="source.cpp" />

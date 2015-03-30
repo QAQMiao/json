@@ -46,16 +46,25 @@ namespace MEOJ
 				printf("\n");
 			if(pNode->jsonType == JSON_ARRAY)
 			{
-				auto jsonNodes = getDataFromSerialization<std::vector<JsonNode*> >(pNode->getValue());
+				auto values = pNode->getValue();
+				auto jsonNodes = getVectorDataFromSerialization<JsonNode*>(values);
+				if(!jsonNodes.empty())
+				{
+					printf("\n");
+				}
 				for(int i = 0;i < jsonNodes.size();i++)
 				{
 					for(int j = 0;j < tabs + 1;j++)
 					{
 						printf("\t");
 					}
-					printf("<elem index=\"%d\">",i);
+					printf("<elem index=\"%d\">\n",i);
 					displayRecursive(tabs + 2,jsonNodes[i]);
-					printf("</elem>");
+					for(int j = 0;j < tabs + 1;j++)
+					{
+						printf("\t");
+					}
+					printf("</elem>\n");
 				}
 			}
 			switch(pNode->jsonType)
@@ -63,15 +72,23 @@ namespace MEOJ
 			case JSON_ARRAY:
                 break;
 			case JSON_STRING:
-				std::cout << getDataFromSerialization<std::string>(pNode->getValue());
+				std::cout << getStringDataFromSerialization(pNode->getValue());
 				break;
 			case JSON_NUMERIC:
 				std::cout << getDataFromSerialization<double>(pNode->getValue());
 				break;
 			case JSON_BOOLEAN:
-				std::cout << getDataFromSerialization<bool>(pNode->getValue());
+				if(getDataFromSerialization<bool>(pNode->getValue()))
+				{
+					std::printf("true");
+				}
+				else
+				{
+					std::printf("false");
+				}
 				break;
 			case JSON_OBJECT:
+			default:
 				for(std::vector<JsonNode*>::size_type i = 0;i < pNode->children.size();i++)
 				{
 					displayRecursive(tabs + 1 , pNode->children[i]);
@@ -79,7 +96,7 @@ namespace MEOJ
 				break;
             }
 
-			if(pNode->hasChildren())
+			if(pNode->hasChildren() || pNode->jsonType == JSON_ARRAY)
 			{
 				for(int i = 0;i < tabs;i++)
 				{
@@ -122,7 +139,7 @@ namespace MEOJ
 		{
 			this->value = value;
 		}
-		const std::vector<unsigned char> getValue() const
+		std::vector<unsigned char> getValue() const
 		{
 			return value;
 		}

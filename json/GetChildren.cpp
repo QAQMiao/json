@@ -69,11 +69,9 @@ std::vector<JsonNode*> MEOJ::getChildren(const std::string& context)
 
 std::vector<unsigned char> MEOJ::getArrayValue(const std::string& context)
 {
-	std::cout<<context<<std::endl;
+//	std::cout<<context<<std::endl;
 	std::vector<std::string> smallPart = diliverContext(context);
 	std::vector<JsonNode*> value;
-//	std::cout<<"----------------------"<<std::endl;
-//	std::cout<<smallPart.size()<<std::endl;
 	for(std::vector<std::string>::size_type i = 0 ;i < smallPart.size();i++)
 		std::cout << smallPart[i] << std::endl;
 	for(std::vector<std::string>::size_type i = 0 ;i < smallPart.size();i++)
@@ -81,7 +79,7 @@ std::vector<unsigned char> MEOJ::getArrayValue(const std::string& context)
 		JsonNode* nowNode = new JsonNode;
 		std::string tmp = "\"aa\":" + smallPart[i];
 		JSON_TYPE nowType = JsonNode::parseJsonType(tmp);
-		std::cout << nowType << std::endl;
+//		std::cout << nowType << std::endl;
 		switch(nowType)
 		{
 			case JSON_STRING:
@@ -107,8 +105,8 @@ std::vector<unsigned char> MEOJ::getArrayValue(const std::string& context)
 		}
 //		for(std::vector<JsonNode*>::size_type i = 0;i < value.size();i++ )
 //			std::cout << value[i] -> key << std::endl;
-		std::cout<<"----"<<std::endl;
-		return getDataSerialization(value);
+//		std::cout<<"----"<<std::endl;
+		return getVectorDataSerialization(value);
 
 	}
 }
@@ -124,9 +122,10 @@ JsonNode* MEOJ::dealString(JsonNode* nowNode,const std::string& str)
 		if(str[++poi] == '\"')
 			break;
 		value += str[poi];
-		std::cout << value << std::endl;
 	}
-	nowNode->setValue(getDataSerialization(value));
+	std::cout << value << std::endl;
+	auto ser = getStringDataSerialization(value);
+	nowNode->setValue(getStringDataSerialization(value));
 	return nowNode;
 }
 

@@ -32,7 +32,7 @@
 
 1426856966 /home/miao/json/json/config.hpp
 
-1427635030 /home/miao/json/json/JsonNode.hpp
+1427712391 /home/miao/json/json/JsonNode.hpp
 	"config.hpp"
 	"JSON_TYPE.hpp"
 	"MyException.hpp"
@@ -48,14 +48,15 @@
 	<exception>
 	<string>
 
-1427634920 /home/miao/json/json/Serialization.hpp
+1427712037 /home/miao/json/json/Serialization.hpp
 	<vector>
+	<string>
 	"util.hpp"
 
 1426856966 /home/miao/json/json/util.hpp
 	<type_traits>
 
-1427634405 source:/home/miao/json/json/GetChildren.cpp
+1427711517 source:/home/miao/json/json/GetChildren.cpp
 	"GetChildren.hpp"
 
 1427373433 /home/miao/json/json/GetChildren.hpp
@@ -82,4 +83,7 @@
 
 1427620000 source:/home/miao/json/json/DiliverContext.cpp
 	"DiliverContext.hpp"
+
+1427711783 source:/home/miao/json/json/Serialization.cpp
+	"Serialization.hpp"
 
