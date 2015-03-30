@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="DiliverContext.cpp" />
 		<Unit filename="DiliverContext.hpp" />
 		<Unit filename="FileSystem.hpp" />
 		<Unit filename="GetChildren.cpp" />

@@ -4,6 +4,7 @@
 #include "config.hpp"
 #include "JSON_TYPE.hpp"
 #include "MyException.hpp"
+#include "Serialization.hpp"
 #include<vector>
 #include<string>
 #include<iostream>
@@ -43,10 +44,41 @@ namespace MEOJ
 						typeString.c_str());
 			if(pNode->hasChildren())
 				printf("\n");
-			for(std::vector<JsonNode*>::size_type i = 0;i < pNode->children.size();i++)
+			if(pNode->jsonType == JSON_ARRAY)
 			{
-				displayRecursive(tabs + 1 , pNode->children[i]);
+				auto jsonNodes = getDataFromSerialization<std::vector<JsonNode*> >(pNode->getValue());
+				for(int i = 0;i < jsonNodes.size();i++)
+				{
+					for(int j = 0;j < tabs + 1;j++)
+					{
+						printf("\t");
+					}
+					printf("<elem index=\"%d\">",i);
+					displayRecursive(tabs + 2,jsonNodes[i]);
+					printf("</elem>");
+				}
 			}
+			switch(pNode->jsonType)
+			{
+			case JSON_ARRAY:
+                break;
+			case JSON_STRING:
+				std::cout << getDataFromSerialization<std::string>(pNode->getValue());
+				break;
+			case JSON_NUMERIC:
+				std::cout << getDataFromSerialization<double>(pNode->getValue());
+				break;
+			case JSON_BOOLEAN:
+				std::cout << getDataFromSerialization<bool>(pNode->getValue());
+				break;
+			case JSON_OBJECT:
+				for(std::vector<JsonNode*>::size_type i = 0;i < pNode->children.size();i++)
+				{
+					displayRecursive(tabs + 1 , pNode->children[i]);
+				}
+				break;
+            }
+
 			if(pNode->hasChildren())
 			{
 				for(int i = 0;i < tabs;i++)
@@ -86,7 +118,7 @@ namespace MEOJ
 		{
 			this->key = key;
 		}
-		void setValue(std::vector<unsigned char> value)
+		void setValue(const std::vector<unsigned char>& value)
 		{
 			this->value = value;
 		}
@@ -170,7 +202,7 @@ namespace MEOJ
         {
 			return parent != NIL;
         }
-    private:
+    public: //notice
         std::string key;
         std::vector<JsonNode*>children;
         std::vector<unsigned char> value;

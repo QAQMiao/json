@@ -9,17 +9,30 @@ using namespace MEOJ;
 std::vector<JsonNode*> MEOJ::getChildren(const std::string& context)
 {
 	std::string::size_type poi = 0,fpoi = context.size() - 1;
-	while(context[poi] != '{')
+	//std::cout << context << std::endl;
+	while(context[poi] == ' ' || context[poi] == '\n' || context[poi] == '\r' || context[poi] == '\t')
 		poi++;
-	while(context[fpoi] != '}')
-		fpoi--;
+	if(context[poi] == '{')
+	{
+		poi++;
+		while(context[fpoi] != '}')
+			fpoi--;
+	}
+	else
+	{
+		fpoi = context.size() + 1;
+		poi--;
+	}
 	std::vector<JsonNode*>childrens;
 	std::vector<std::string>smallPart = diliverContext(context.substr(poi + 1,fpoi - poi - 1));
+//	for(std::vector<std::string>::size_type i = 0;i < smallPart.size();i++)
+//		std::cout<<smallPart[i]<<std::endl;
 	for(std::vector<std::string>::size_type i = 0;i < smallPart.size();i++)
 	{
 		JsonNode* nowNode = new JsonNode;
 		std::string key = "";
 		std::string::size_type position = 0;
+		while(smallPart[i][position++] != '\"');
 		while(smallPart[i][position++] != '\"')
 			key += smallPart[i][position - 1];
 		nowNode->setKey(key);
@@ -29,52 +42,72 @@ std::vector<JsonNode*> MEOJ::getChildren(const std::string& context)
 		switch(nowType)
 		{
 			case JSON_STRING:
-				childrens.push_back(dealString(nowNode,smallPart[i]));break;
+				childrens.push_back(dealString(nowNode,smallPart[i]));
+				break;
 			case JSON_BOOLEAN:
-				childrens.push_back(dealBoolean(nowNode,smallPart[i]));break;
+				childrens.push_back(dealBoolean(nowNode,smallPart[i]));
+				break;
 			case JSON_NUMERIC:
-				childrens.push_back(dealNumberic(nowNode,smallPart[i]));break;
+				childrens.push_back(dealNumberic(nowNode,smallPart[i]));
+				break;
 			case JSON_OBJECT:
-				childrens.push_back(dealObject(nowNode,smallPart[i]));break;
+				childrens.push_back(dealObject(nowNode,smallPart[i]));
+				break;
 			case JSON_ARRAY:
-				childrens.push_back(dealArray(nowNode,smallPart[i]));break;
+				childrens.push_back(dealArray(nowNode,smallPart[i]));
+				break;
 			case JSON_UNKNOWN:
 				std::cout<<"这是什么鬼"<<std::endl;break;
 			default:
 				break;
-
 		}
-
+//        for(std::vector<JsonNode*>::size_type i = 0;i < childrens.size();i++)
+//			std::cout<<childrens[i]->value[0]<<std::endl;
 	}
 	return childrens;
 }
 
 std::vector<unsigned char> MEOJ::getArrayValue(const std::string& context)
 {
-	std::vector<std::string>smallPart = diliverContext(context);
-	std::vector<JsonNode*>value;
+	std::cout<<context<<std::endl;
+	std::vector<std::string> smallPart = diliverContext(context);
+	std::vector<JsonNode*> value;
+//	std::cout<<"----------------------"<<std::endl;
+//	std::cout<<smallPart.size()<<std::endl;
+	for(std::vector<std::string>::size_type i = 0 ;i < smallPart.size();i++)
+		std::cout << smallPart[i] << std::endl;
 	for(std::vector<std::string>::size_type i = 0 ;i < smallPart.size();i++)
 	{
-		JsonNode* nowNode;
+		JsonNode* nowNode = new JsonNode;
 		std::string tmp = "\"aa\":" + smallPart[i];
-		JSON_TYPE nowType = JsonNode::parseJsonType(context);
+		JSON_TYPE nowType = JsonNode::parseJsonType(tmp);
+		std::cout << nowType << std::endl;
 		switch(nowType)
 		{
 			case JSON_STRING:
-				value.push_back(dealString(nowNode,smallPart[i]));break;
+				value.push_back(dealString(nowNode,smallPart[i]));
+				break;
 			case JSON_BOOLEAN:
-				value.push_back(dealBoolean(nowNode,smallPart[i]));break;
+				value.push_back(dealBoolean(nowNode,smallPart[i]));
+				break;
 			case JSON_NUMERIC:
-				value.push_back(dealNumberic(nowNode,smallPart[i]));break;
+				value.push_back(dealNumberic(nowNode,smallPart[i]));
+				break;
 			case JSON_OBJECT:
-				value.push_back(dealObject(nowNode,smallPart[i]));break;
+				value.push_back(dealObject(nowNode,smallPart[i]));
+				break;
 			case JSON_ARRAY:
-				value.push_back(dealArray(nowNode,smallPart[i]));break;
+				value.push_back(dealArray(nowNode,smallPart[i]));
+				break;
 			case JSON_UNKNOWN:
-				std::cout<<"这是什么鬼"<<std::endl;break;
+				std::cout << "这是什么鬼" << std::endl;
+				break;
 			default:
 				break;
 		}
+//		for(std::vector<JsonNode*>::size_type i = 0;i < value.size();i++ )
+//			std::cout << value[i] -> key << std::endl;
+		std::cout<<"----"<<std::endl;
 		return getDataSerialization(value);
 
 	}
@@ -91,6 +124,7 @@ JsonNode* MEOJ::dealString(JsonNode* nowNode,const std::string& str)
 		if(str[++poi] == '\"')
 			break;
 		value += str[poi];
+		std::cout << value << std::endl;
 	}
 	nowNode->setValue(getDataSerialization(value));
 	return nowNode;
@@ -115,9 +149,10 @@ JsonNode* MEOJ::dealNumberic(JsonNode* nowNode,const std::string& str)
 	std::string::size_type poi = 0;
 	while(str[poi] < '0' || str[poi] > '9')
 		poi++;
-	int value = 0;
-	while(str[poi] >= '0' && str[poi] <= '9' || str[poi] == '.')
-		value = value * 10 + str[poi];
+	double value = 0;
+	while(poi < str.size() && (str[poi] >= '0' && str[poi] <= '9') || str[poi] == '.')
+		value = value * 10 + str[poi++] - '0';
+	//std::cout<<value<<std::endl;
 	nowNode->setValue(getDataSerialization(value));
 	return nowNode;
 }

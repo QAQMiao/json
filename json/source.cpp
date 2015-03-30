@@ -1,6 +1,7 @@
 #include"FileSystem.hpp"
 #include"Serialization.hpp"
 #include"JsonParser.hpp"
+#include<string>
 #include<iostream>
 using namespace std;
 using namespace MEOJ;

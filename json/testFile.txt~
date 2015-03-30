@@ -8,7 +8,7 @@
               "sex" : "female",
               "age" : 20,
               "beautiful" : true,
-              "hobby" : ["tv operas",1,"pc games","computer science","Roller skating","cou re nao"]
+              "hobby" : ["tv operas","movies","pc games","computer science","Roller skating","cou re nao"]
       },
       "hobby" : ["pc games","computer science","music"]
 }

@@ -31,7 +31,7 @@ namespace MEOJ
 	template<typename T>
 	const T getDataFromSerialization(const std::vector<unsigned char>& data)
 	{
-		auto pData = reinterpret_cast<T*>(&data[0]);
+		auto pData = reinterpret_cast<const T*>(&data[0]);
 		return *pData;
 	}
 }

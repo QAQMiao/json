@@ -23,8 +23,7 @@ namespace MEOJ
 		}
 		JsonNode* getRootNodeFromFile(const char* fileName)
 		{
-			JsonNode* rootNode = new JsonNode;
-			rootNode = getRootNodeFromString(FileSystem::readFileContext(fileName));
+			JsonNode* rootNode = getRootNodeFromString(FileSystem::readFileContext(fileName));
 			return rootNode;
 		}
 	};
